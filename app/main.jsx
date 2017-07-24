@@ -8,7 +8,7 @@
 import 'babel-polyfill'
 
 import React from 'react'
-import {Router, Route, IndexRedirect, browserHistory} from 'react-router'
+import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 import {render} from 'react-dom'
 import {connect, Provider} from 'react-redux'
 
@@ -17,24 +17,13 @@ import Jokes from './components/Jokes'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
-
-const ExampleApp = connect(
-  ({ auth }) => ({ user: auth })
-)(
-  ({ user, children }) =>
-    <div>
-      <nav>
-        {user ? <WhoAmI/> : <Login/>}
-      </nav>
-      {children}
-    </div>
-)
+import Home from './components/Home'
 
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={ExampleApp}>
-        <IndexRedirect to="/jokes" />
+      <Route path="/">
+        <IndexRoute component={Home} />
         <Route path="/jokes" component={Jokes} />
       </Route>
       <Route path='*' component={NotFound} />
