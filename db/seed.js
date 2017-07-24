@@ -1,16 +1,17 @@
 'use strict'
 
 const db = require('APP/db')
-    , {User, Thing, Favorite, Promise} = db
+    , {User, Thing, Favorite, Promise, Thought} = db
     , {mapValues} = require('lodash')
 
 function seedEverything() {
   const seeded = {
     users: users(),
-    things: things(),
+    things: things()
   }
 
   seeded.favorites = favorites(seeded)
+  seeded.thoughts = thoughts(seeded)
 
   return Promise.props(seeded)
 }
@@ -33,6 +34,13 @@ const things = seed(Thing, {
   smiting: {name: 'smiting'},
   puppies: {name: 'puppies'},
 })
+
+const thoughts = seed(Thought, ({users}) => ({
+  deep: {
+    text: 'Subways are just like sideways elevators',
+    user_id: users.god.id
+  }
+}))
 
 const favorites = seed(Favorite,
   // We're specifying a function here, rather than just a rows object.
